@@ -1,0 +1,8 @@
+<h1>Super page de tests API</h1>
+
+<p-button label="GET TEST" (onClick)="getTests()"></p-button>
+
+<ul>
+  <li *ngFor="let test of tests">{{test.testval}}</li>
+</ul>
+

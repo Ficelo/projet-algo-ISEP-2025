@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import { Button } from 'primeng/button';
 import {Test, TestService} from '../../services/test.service';
 import {NgForOf} from '@angular/common';

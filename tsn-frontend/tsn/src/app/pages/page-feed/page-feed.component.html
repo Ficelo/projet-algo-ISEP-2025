@@ -1,1 +1,66 @@
-<p>page-feed works!</p>
+<div class="three-column-layout">
+  <div id="vertical-menu">
+    <div>
+      <i class="pi pi-search"></i>
+      <p>Explorer</p>
+    </div>
+    <div>
+      <i class="pi pi-envelope"></i>
+      <p>Messages</p>
+    </div>
+    <div>
+      <i class="pi pi-users"></i>
+      <p>Amis</p>
+    </div>
+    <div>
+      <i class="pi pi-user"></i>
+      <p>Profil</p>
+    </div>
+    <div>
+      <i class="pi pi-cog"></i>
+      <p>Réglages</p>
+    </div>
+    <div>
+      <i class="pi pi-sign-out"></i>
+      <p>Se déconnecter</p>
+    </div>
+
+  </div>
+
+  <div id="content">
+    <app-post user="User test 1" text="Super texte de fou malade" imageurl="/assets/images/dog.webp"></app-post>
+    <app-post user="User test 2" text="Jsp quoi écrite" imageurl=""></app-post>
+    <app-post user="User test 3" text="Lorem ipsum tt ça" imageurl=""></app-post>
+    <app-post user="User test 4" text="Number 15 burger king foot lettuce" imageurl=""></app-post>
+    <app-post user="User test 5" text="jsp faut bien du texte" imageurl=""></app-post>
+    <app-post user="User test 6" text="Bien la flemme de coder tout ça" imageurl=""></app-post>
+  </div>
+
+  <div id="search-suggestion">
+    <p-floatlabel variant="on">
+      <input pInputText id="over_label" autocomplete="off" />
+      <label for="over_label"><i class="pi pi-search"></i> Search</label>
+    </p-floatlabel>
+
+    <br>
+
+    <p-card header="Suggestions" id="suggestion-container">
+      <!--  Faire un composant suggestion    -->
+      <div class="suggestion">
+        <p-avatar label="U1" shape="circle"></p-avatar>
+        <p>User 1</p>
+        <p-button label="Suivre" [rounded]="true"></p-button>
+      </div>
+      <div class="suggestion">
+        <p-avatar label="U2" shape="circle" ></p-avatar>
+        <p>User 2</p>
+        <p-button label="Suivre" [rounded]="true"></p-button>
+      </div>
+      <div class="suggestion">
+        <p-avatar label="U3" shape="circle" ></p-avatar>
+        <p>User 3</p>
+        <p-button label="Suivre" [rounded]="true"></p-button>
+      </div>
+    </p-card>
+  </div>
+</div>

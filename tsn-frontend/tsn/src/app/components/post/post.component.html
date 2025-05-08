@@ -1,0 +1,13 @@
+<p-card>
+  <ng-template #header>
+    <i class="pi pi-user"></i> <!-- Remplacer par la photo de profil-->
+    <p id="username">{{user}}</p>
+  </ng-template>
+  <p id="post-content">{{text}}</p>
+  <img alt="image" src="{{imageurl}}" [hidden]="imageHidden">
+  <ng-template #footer>
+    <p-button icon="pi pi-heart" [rounded]="true" [hidden]="postLiked" (onClick)="likePressed()"></p-button>
+    <p-button icon="pi pi-heart-fill" [rounded]="true" [hidden]="!postLiked" (onClick)="likePressed()"></p-button>
+    <p-button icon="pi pi-comment" [rounded]="true"></p-button>
+  </ng-template>
+</p-card>

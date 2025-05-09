@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-page-reglages',
   imports: [],
   templateUrl: './page-reglages.component.html',
+  standalone: true,
   styleUrl: './page-reglages.component.scss'
 })
 export class PageReglagesComponent {

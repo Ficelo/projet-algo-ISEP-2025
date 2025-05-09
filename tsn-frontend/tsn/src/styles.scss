@@ -1,5 +1,13 @@
 @import "primeicons/primeicons.css";
 
-html {
+html, body {
   font-family: Arial, serif;
+  height: 100%;
+  margin: 0;
+}
+
+main.full-height, app-root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }

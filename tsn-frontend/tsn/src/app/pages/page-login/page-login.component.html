@@ -1,0 +1,30 @@
+<div class="auth-wrapper">
+  <div id="login" *ngIf="login">
+    <p-float-label variant="on">
+      <input pInputText id="username" />
+      <label for="username">Username</label>
+    </p-float-label>
+    <p-float-label variant="on">
+      <input pInputText id="password" />
+      <label for="password">Password</label>
+    </p-float-label>
+    <p-button (onClick)="connectUser()" label="Log in"></p-button>
+    <a (click)="changeLogin()">Sign up</a>
+  </div>
+  <div id="sign-in" *ngIf="!login">
+    <p-float-label variant="on">
+      <input pInputText id="username-signup" />
+      <label for="username-signup">Username</label>
+    </p-float-label>
+    <p-float-label variant="on">
+      <input pInputText id="display-name" />
+      <label for="display-name">Display name</label>
+    </p-float-label>
+    <p-float-label variant="on">
+      <input pInputText id="password-signup" />
+      <label for="password-signup">Password</label>
+    </p-float-label>
+    <p-button (onClick)="createUser()" label="Create account"></p-button>
+    <a (click)="changeLogin()">Already have an account ? Log in</a>
+  </div>
+</div>

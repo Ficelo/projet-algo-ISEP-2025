@@ -6,6 +6,8 @@ import {InputText} from 'primeng/inputtext';
 import {Card} from 'primeng/card';
 import {Avatar} from 'primeng/avatar';
 import {Button} from 'primeng/button';
+import {UserService} from '../../services/user.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-page-feed',
@@ -23,6 +25,13 @@ import {Button} from 'primeng/button';
   styleUrl: './page-feed.component.scss'
 })
 export class PageFeedComponent {
+
+  constructor(protected userService: UserService, protected router : Router) {
+  }
+
+  rechercher() {
+    this.router.navigate(["recherche"], {queryParams : {r : "super recherche test"}})
+  }
 
 }
 

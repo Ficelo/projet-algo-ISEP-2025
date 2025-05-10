@@ -1,0 +1,30 @@
+<div id="vertical-menu">
+  <div (click)="router.navigate([''])">
+    <i class="pi pi-home"></i>
+    <p>Accueil</p>
+  </div>
+  <div (click)="router.navigate(['recherche'])">
+    <i class="pi pi-search"></i>
+    <p>Explorer</p>
+  </div>
+  <div (click)="router.navigate(['messages'])">
+    <i class="pi pi-envelope"></i>
+    <p>Messages</p>
+  </div>
+  <div (click)="router.navigate(['amis'])">
+    <i class="pi pi-users"></i>
+    <p>Amis</p>
+  </div>
+  <div (click)="router.navigate(['profil'])">
+    <i class="pi pi-user"></i>
+    <p>Profil</p>
+  </div>
+  <div (click)="router.navigate(['reglages'])">
+    <i class="pi pi-cog"></i>
+    <p>Réglages</p>
+  </div>
+  <div (click)="userService.logout()">
+    <i class="pi pi-sign-out"></i>
+    <p>Se déconnecter</p>
+  </div>
+</div>

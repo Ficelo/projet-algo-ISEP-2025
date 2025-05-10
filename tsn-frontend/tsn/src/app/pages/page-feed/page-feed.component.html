@@ -1,31 +1,5 @@
 <div class="three-column-layout">
-  <div id="vertical-menu">
-    <div (click)="router.navigate(['recherche'])">
-      <i class="pi pi-search"></i>
-      <p>Explorer</p>
-    </div>
-    <div (click)="router.navigate(['messages'])">
-      <i class="pi pi-envelope"></i>
-      <p>Messages</p>
-    </div>
-    <div (click)="router.navigate(['amis'])">
-      <i class="pi pi-users"></i>
-      <p>Amis</p>
-    </div>
-    <div (click)="router.navigate(['profil'])">
-      <i class="pi pi-user"></i>
-      <p>Profil</p>
-    </div>
-    <div (click)="router.navigate(['reglages'])">
-      <i class="pi pi-cog"></i>
-      <p>Réglages</p>
-    </div>
-    <div (click)="userService.logout()">
-      <i class="pi pi-sign-out"></i>
-      <p>Se déconnecter</p>
-    </div>
-
-  </div>
+  <app-vertical-menu></app-vertical-menu>
 
   <div id="content">
     <app-post user="User test 1" text="Super texte de fou malade" imageurl="/assets/images/dog.webp"></app-post>
@@ -44,23 +18,7 @@
 
     <br>
 
-    <p-card header="Suggestions" id="suggestion-container">
-      <!--  Faire un composant suggestion    -->
-      <div class="suggestion">
-        <p-avatar label="U1" shape="circle"></p-avatar>
-        <p>User 1</p>
-        <p-button label="Suivre" [rounded]="true"></p-button>
-      </div>
-      <div class="suggestion">
-        <p-avatar label="U2" shape="circle" ></p-avatar>
-        <p>User 2</p>
-        <p-button label="Suivre" [rounded]="true"></p-button>
-      </div>
-      <div class="suggestion">
-        <p-avatar label="U3" shape="circle" ></p-avatar>
-        <p>User 3</p>
-        <p-button label="Suivre" [rounded]="true"></p-button>
-      </div>
-    </p-card>
+    <app-user-suggestion></app-user-suggestion>
+
   </div>
 </div>

@@ -1,0 +1,91 @@
+.three-column-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#vertical-menu,
+#search-suggestion {
+  flex: 1;
+  box-sizing: border-box;
+}
+
+#search-suggestion {
+  padding: 1rem;
+}
+
+#content {
+  flex: 2.5;
+  box-sizing: border-box;
+  overflow-y: scroll;
+  padding: 1rem;
+}
+
+#over_label {
+  width: 100%;
+}
+
+#infos-profil {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);;
+  padding: 1rem;
+  //margin-bottom: 1.5rem;
+  display: block;
+  margin: 1rem auto;
+  max-width: 600px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.profile-name {
+  display: flex;
+  flex-direction: column;
+}
+
+.username {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+}
+
+#description {
+  font-size: 0.95rem;
+  color: #666;
+  margin: 0;
+}
+
+.friends-link {
+  margin-top: 1rem;
+  color: #007bff;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.friends-link:hover {
+  color: #0056b3;
+}
+
+.subscribe-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.subscribe-row .friends-link {
+  margin: 0;
+  color: #007bff;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.subscribe-row .friends-link:hover {
+  color: #0056b3;
+}
+
+

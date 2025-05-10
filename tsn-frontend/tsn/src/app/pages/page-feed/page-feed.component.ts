@@ -8,6 +8,8 @@ import {Avatar} from 'primeng/avatar';
 import {Button} from 'primeng/button';
 import {UserService} from '../../services/user.service';
 import {Router} from '@angular/router';
+import {VerticalMenuComponent} from '../../components/vertical-menu/vertical-menu.component';
+import {UserSuggestionComponent} from '../../components/user-suggestion/user-suggestion.component';
 
 @Component({
   selector: 'app-page-feed',
@@ -18,7 +20,9 @@ import {Router} from '@angular/router';
     InputText,
     Card,
     Avatar,
-    Button
+    Button,
+    VerticalMenuComponent,
+    UserSuggestionComponent
   ],
   templateUrl: './page-feed.component.html',
   standalone: true,

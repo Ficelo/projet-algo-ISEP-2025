@@ -1,1 +1,23 @@
-<p>page-messages works!</p>
+<div class="two-column-layout">
+  <div class="friend-list">
+    <app-friendlist-item
+      *ngFor="let i of [].constructor(20)"
+      username="TEST USER"
+      lastActivity="Dernier message il y a 20 minutes">
+    </app-friendlist-item>
+  </div>
+
+  <div class="chat">
+    <div class="chat-header">
+      <p-avatar></p-avatar>
+      <p class="chat-username">USERNAME</p>
+    </div>
+    <div class="chat-messages">
+      <app-message messageText="Super message de fou malade"></app-message>
+      <app-message messageText="Super message de fou malade"></app-message>
+      <app-message messageText="Super message de fou malade"></app-message>
+      <app-message class="self" fromSelf="true" messageText="Super message de fou malade"></app-message>
+      <app-message messageText="Super message de fou malade"></app-message>
+    </div>
+  </div>
+</div>

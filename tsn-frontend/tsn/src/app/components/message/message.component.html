@@ -1,0 +1,4 @@
+<div class="{{fromSelf ? 'message-bubble message-bubble-self' : 'message-bubble message-bubble-other'}}">
+  <p class="message-text">{{ messageText }}</p>
+  <img *ngIf="imageLink" [src]="imageLink" alt="Attached image" class="message-image" />
+</div>

@@ -34,12 +34,12 @@ export class PageLoginComponent {
   }
 
   connectUser() {
-    // implémenter la logique de connexion
+    // TODO : implémenter la logique de connexion
     this.userService.connectUser(this.user);
   }
 
   createUser() {
-    // implementer la logique de création de compte
+    // TODO : implementer la logique de création de compte
     this.connectUser();
   }
 

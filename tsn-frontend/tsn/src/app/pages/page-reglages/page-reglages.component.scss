@@ -1,0 +1,14 @@
+.two-column-layout {
+  display: flex;
+  height: 100vh;
+}
+
+#vertical-menu {
+  flex: 1;
+  padding: 1rem;
+}
+
+#reglages {
+  flex: 5;
+  padding: 1rem;
+}

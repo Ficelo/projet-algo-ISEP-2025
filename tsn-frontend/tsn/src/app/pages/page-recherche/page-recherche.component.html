@@ -1,2 +1,28 @@
-<p>page-recherche works!</p>
-<h1>Recherche : {{recherche}}</h1>
+<div class="three-column-layout">
+  <app-vertical-menu></app-vertical-menu>
+
+
+
+  <div id="content">
+    <span *ngIf="isRecherche()">Résultats pour : {{recherche}}</span>
+    <app-post user="User test 1" text="Super texte de fou malade" imageurl="/assets/images/dog.webp"></app-post>
+    <app-post user="User test 2" text="Jsp quoi écrite" imageurl=""></app-post>
+    <app-post user="User test 3" text="Lorem ipsum tt ça" imageurl=""></app-post>
+    <app-post user="User test 4" text="Number 15 burger king foot lettuce" imageurl=""></app-post>
+    <app-post user="User test 5" text="jsp faut bien du texte" imageurl=""></app-post>
+    <app-post user="User test 6" text="Bien la flemme de coder tout ça" imageurl=""></app-post>
+  </div>
+
+  <div id="search-suggestion">
+    <p-floatlabel variant="on">
+      <input pInputText id="over_label" autocomplete="off" (keyup.enter)="rechercher()"/>
+      <label for="over_label"><i class="pi pi-search"></i> Search</label>
+    </p-floatlabel>
+
+    <br>
+
+    <app-user-suggestion></app-user-suggestion>
+
+  </div>
+</div>
+

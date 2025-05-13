@@ -10,6 +10,7 @@
   flex: 1;
   overflow-y: auto;
   border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd;
   background-color: #fff;
   padding: 1rem 0;
 }
@@ -44,3 +45,31 @@
   padding: 1rem;
   overflow-y: auto;
 }
+
+#input-bar {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #ddd;
+  background-color: #fff;
+  gap: 0.5rem;
+}
+
+#input-bar input {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+}
+
+#input-bar input:focus {
+  border-color: #007bff;
+}
+
+#input-bar p-button {
+  flex-shrink: 0;
+}
+

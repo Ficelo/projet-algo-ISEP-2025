@@ -3,6 +3,9 @@ import {FriendlistItemComponent} from '../../components/friendlist-item/friendli
 import {Avatar} from 'primeng/avatar';
 import {MessageComponent} from '../../components/message/message.component';
 import {NgForOf} from '@angular/common';
+import {VerticalMenuComponent} from '../../components/vertical-menu/vertical-menu.component';
+import {InputText} from 'primeng/inputtext';
+import {Button} from 'primeng/button';
 
 @Component({
   selector: 'app-page-messages',
@@ -10,7 +13,10 @@ import {NgForOf} from '@angular/common';
     FriendlistItemComponent,
     Avatar,
     MessageComponent,
-    NgForOf
+    NgForOf,
+    VerticalMenuComponent,
+    InputText,
+    Button
   ],
   templateUrl: './page-messages.component.html',
   standalone: true,

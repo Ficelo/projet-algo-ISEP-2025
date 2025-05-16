@@ -1,0 +1,35 @@
+<div class="fab-button">
+  <p-button icon="pi pi-pencil" (onClick)="showDialog()" class="fab-icon" />
+</div>
+
+<p-dialog
+  header="📝 Nouveau Post"
+  [(visible)]="visible"
+  [modal]="true"
+  [dismissableMask]="true"
+  [style]="{ width: '500px' }"
+  [breakpoints]="{ '960px': '90vw' }"
+  [baseZIndex]="1001"
+  class="post-dialog"
+>
+  <div class="dialog-body">
+    <textarea pTextarea [formControl]="postText" rows="4" placeholder="Write a new post..." class="post-textarea"></textarea>
+
+    <p-fileupload
+      mode="basic"
+      chooseIcon="pi pi-upload"
+      accept="image/*"
+      maxFileSize="1000000"
+      [auto]="true"
+      chooseLabel="Upload Image"
+      class="file-upload"
+      customUpload="true"
+      (uploadHandler)="onFileSelect($event)"
+    />
+
+    <div class="button-group">
+      <p-button label="Cancel" severity="secondary" (click)="visible = false" />
+      <p-button label="Post" [hidden]="!isPostPostable()" (click)="createPost()" />
+    </div>
+  </div>
+</p-dialog>

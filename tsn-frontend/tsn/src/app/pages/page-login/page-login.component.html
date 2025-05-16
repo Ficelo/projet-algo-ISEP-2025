@@ -1,30 +1,30 @@
 <div class="auth-wrapper">
   <div id="login" *ngIf="login">
     <p-float-label variant="on">
-      <input pInputText id="username" />
+      <input pInputText id="username" [formControl]="usernameLoginControl"/>
       <label for="username">Username</label>
     </p-float-label>
     <p-float-label variant="on">
-      <input pInputText id="password" />
+      <input pInputText id="password" [formControl]="passwordLoginControl"/>
       <label for="password">Password</label>
     </p-float-label>
-    <p-button (onClick)="connectUser()" label="Log in"></p-button>
+    <p-button (onClick)="connectUser()"  label="Log in"></p-button>
     <a (click)="changeLogin()">Sign up</a>
   </div>
   <div id="sign-in" *ngIf="!login">
     <p-float-label variant="on">
-      <input pInputText id="username-signup" />
+      <input pInputText id="username-signup" [formControl]="usernameControl"/>
       <label for="username-signup">Username</label>
     </p-float-label>
     <p-float-label variant="on">
-      <input pInputText id="display-name" />
+      <input pInputText id="display-name" [formControl]="displayNameControl"/>
       <label for="display-name">Display name</label>
     </p-float-label>
     <p-float-label variant="on">
-      <input pInputText id="password-signup" />
+      <input pInputText id="password-signup" [formControl]="passwordControl"/>
       <label for="password-signup">Password</label>
     </p-float-label>
-    <p-button (onClick)="createUser()" label="Create account"></p-button>
+    <p-button (onClick)="createUser()" [disabled]="!getFormCompletedSignIn()" label="Create account"></p-button>
     <a (click)="changeLogin()">Already have an account ? Log in</a>
   </div>
 </div>

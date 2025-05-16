@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PostComponent} from '../../components/post/post.component';
 import {Menu} from 'primeng/menu';
 import {FloatLabel} from 'primeng/floatlabel';
@@ -10,6 +10,9 @@ import {UserService} from '../../services/user.service';
 import {Router} from '@angular/router';
 import {VerticalMenuComponent} from '../../components/vertical-menu/vertical-menu.component';
 import {UserSuggestionComponent} from '../../components/user-suggestion/user-suggestion.component';
+import {PostCreationPopupComponent} from '../../components/post-creation-popup/post-creation-popup.component';
+import {Post, PostService} from '../../services/post.service';
+import {NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-page-feed',
@@ -22,15 +25,26 @@ import {UserSuggestionComponent} from '../../components/user-suggestion/user-sug
     Avatar,
     Button,
     VerticalMenuComponent,
-    UserSuggestionComponent
+    UserSuggestionComponent,
+    PostCreationPopupComponent,
+    NgForOf
   ],
   templateUrl: './page-feed.component.html',
   standalone: true,
   styleUrl: './page-feed.component.scss'
 })
-export class PageFeedComponent {
+export class PageFeedComponent implements OnInit{
 
-  constructor(protected userService: UserService, protected router : Router) {
+  posts : Post[] = [];
+
+  constructor(protected userService: UserService, protected router : Router, private postService : PostService) {}
+
+  ngOnInit() {
+    this.postService.getAllPosts().subscribe({
+      next: (data) => {
+        this.posts = data.reverse();
+      }
+    });
   }
 
   rechercher() {

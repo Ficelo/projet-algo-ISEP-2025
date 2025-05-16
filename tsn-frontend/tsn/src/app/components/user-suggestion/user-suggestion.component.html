@@ -1,18 +1,7 @@
 <p-card header="Suggestions" id="suggestion-container">
-  <!--  Faire un composant suggestion    -->
-  <div class="suggestion">
-    <p-avatar label="U1" shape="circle"></p-avatar>
-    <p>User 1</p>
-    <p-button label="Suivre" [rounded]="true"></p-button>
-  </div>
-  <div class="suggestion">
-    <p-avatar label="U2" shape="circle" ></p-avatar>
-    <p>User 2</p>
-    <p-button label="Suivre" [rounded]="true"></p-button>
-  </div>
-  <div class="suggestion">
-    <p-avatar label="U3" shape="circle" ></p-avatar>
-    <p>User 3</p>
+  <div class="suggestion" *ngFor="let user of users">
+    <p-avatar label="{{user.displayname[0].toUpperCase()}}" shape="circle"></p-avatar>
+    <p>{{user.displayname}}</p>
     <p-button label="Suivre" [rounded]="true"></p-button>
   </div>
 </p-card>

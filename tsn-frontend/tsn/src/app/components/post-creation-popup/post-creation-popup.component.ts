@@ -62,8 +62,6 @@ export class PostCreationPopupComponent {
       date: new Date()
     };
 
-    console.log(post);
-
     this.postService.createPost(post).subscribe({
       next: res => {
         console.log('Post created:', res);

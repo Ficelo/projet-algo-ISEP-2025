@@ -53,6 +53,7 @@ app.get('/api/users/:username', async (req, res) => {
     }
 });
 
+// Get all the posts
 app.get('/api/posts', async (req, res) => {
     try {
         const result = await pool.query('SELECT username, text, image, date FROM posts');
@@ -69,6 +70,7 @@ app.get('/api/posts', async (req, res) => {
     }
 });
 
+// Get all the posts from a user
 app.get('/api/posts/:username', async (req, res) => {
     const { username } = req.params;
 
@@ -95,8 +97,6 @@ app.get('/api/posts/:username', async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 });
-
-
 
 // Create a new user
 app.post('/api/users', async (req, res) => {
@@ -133,6 +133,20 @@ app.post('/api/users/:username/friends', async (req, res) => {
         res.status(500).json({ error: 'Could not add friend' });
     }
 });
+
+// Get all of a users friends
+app.get('/api/users/:username/friends', async (req, res) => {
+    const { username } = req.params;
+
+    try {
+        const result = await pool.query('SELECT user_username, friend_username FROM friends WHERE user_username = $1', [username]);
+        if (result.rows.length === 0) return res.status(404).json({ error: 'Friends not found' });
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({error : 'Server error'})
+    }
+})
 
 // Create a new post
 app.post('/api/posts', async (req, res) => {

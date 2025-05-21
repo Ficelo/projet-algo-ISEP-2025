@@ -3,17 +3,14 @@
 
   <div id="content">
     <app-friendlist-item
-      *ngFor="let i of [].constructor(20)"
-      username="TEST USER"
-      lastActivity="Dernier message il y a 20 minutes">
+      *ngFor="let user of friends"
+      username="{{user.displayname}}"
+      lastActivity="Last message {{dateService.timeAgo(user.last_connection_date)}}">
     </app-friendlist-item>
   </div>
 
   <div id="search-suggestion">
-    <p-floatlabel variant="on">
-      <input pInputText id="over_label" autocomplete="off" (keyup.enter)="rechercher()"/>
-      <label for="over_label"><i class="pi pi-search"></i> Search</label>
-    </p-floatlabel>
+    <app-searchbar></app-searchbar>
 
     <br>
 

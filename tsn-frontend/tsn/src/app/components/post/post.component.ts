@@ -3,6 +3,7 @@ import {Card} from 'primeng/card';
 import {Button} from 'primeng/button';
 import {NgIf} from '@angular/common';
 import {Avatar} from 'primeng/avatar';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-post',
@@ -10,7 +11,8 @@ import {Avatar} from 'primeng/avatar';
     Card,
     Button,
     NgIf,
-    Avatar
+    Avatar,
+    RouterLink
   ],
   templateUrl: './post.component.html',
   standalone: true,

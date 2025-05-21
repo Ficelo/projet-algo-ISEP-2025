@@ -6,6 +6,8 @@ import {PostComponent} from '../../components/post/post.component';
 import {UserSuggestionComponent} from '../../components/user-suggestion/user-suggestion.component';
 import {VerticalMenuComponent} from '../../components/vertical-menu/vertical-menu.component';
 import {NgIf} from '@angular/common';
+import {FeedComponent} from "../../components/feed/feed.component";
+import {SearchbarComponent} from '../../components/searchbar/searchbar.component';
 
 @Component({
   selector: 'app-page-recherche',
@@ -15,7 +17,9 @@ import {NgIf} from '@angular/common';
     PostComponent,
     UserSuggestionComponent,
     VerticalMenuComponent,
-    NgIf
+    NgIf,
+    FeedComponent,
+    SearchbarComponent
   ],
   templateUrl: './page-recherche.component.html',
   standalone: true,

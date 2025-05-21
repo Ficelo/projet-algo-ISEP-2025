@@ -14,8 +14,11 @@ export const routes: Routes = [
   {path: "test", component: PageTestComponent, canActivate: [AuthGuard]},
   {path: "login", component: PageLoginComponent},
   {path: "messages", component: PageMessagesComponent, canActivate: [AuthGuard]},
+  {path: "profil/:username", component: PageProfilComponent, canActivate: [AuthGuard]},
   {path: "profil", component: PageProfilComponent, canActivate: [AuthGuard]},
   {path: "recherche", component: PageRechercheComponent, canActivate: [AuthGuard]},
+  {path: "recherche/:search", component: PageRechercheComponent, canActivate: [AuthGuard]},
   {path: "reglages", component: PageReglagesComponent, canActivate: [AuthGuard]},
+  {path: "amis/:username", component: PageAmisComponent, canActivate: [AuthGuard]},
   {path: "amis", component: PageAmisComponent, canActivate: [AuthGuard]}
 ];

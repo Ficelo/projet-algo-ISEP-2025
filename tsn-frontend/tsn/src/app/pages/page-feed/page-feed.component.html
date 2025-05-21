@@ -2,15 +2,17 @@
   <app-vertical-menu></app-vertical-menu>
 
   <div id="content">
-    <app-post *ngFor="let post of posts" [user]="post.username" [text]="post.text" [imageurl]="post.image"></app-post>
-
+<!--    <app-post *ngFor="let post of posts" [displayName]="users[post.username].displayname" [user]="post.username" [text]="post.text" [imageurl]="post.image"></app-post>-->
+    <app-feed></app-feed>
   </div>
 
+
   <div id="search-suggestion">
-    <p-floatlabel variant="on">
-      <input pInputText id="over_label" autocomplete="off" (keyup.enter)="rechercher()"/>
-      <label for="over_label"><i class="pi pi-search"></i> Search</label>
-    </p-floatlabel>
+<!--    <p-floatlabel variant="on">-->
+<!--      <input pInputText id="over_label" autocomplete="off" (keyup.enter)="rechercher()"/>-->
+<!--      <label for="over_label"><i class="pi pi-search"></i> Search</label>-->
+<!--    </p-floatlabel>-->
+    <app-searchbar></app-searchbar>
 
     <br>
 

@@ -1,7 +1,9 @@
 <p-card>
   <ng-template #header>
-    <p-avatar shape="circle" label="{{user[0].toUpperCase()}}" /><!-- Ptet essayer de gérer des photos de profil plus tard -->
-    <p id="username">{{user}}</p>
+    <a [routerLink]="['/profil', user]" >
+      <p-avatar shape="circle" label="{{displayName[0].toUpperCase()}}" /><!-- Ptet essayer de gérer des photos de profil plus tard -->
+      <p id="username">{{displayName}}</p>
+    </a>
   </ng-template>
   <p id="post-content">{{text}}</p>
   <img *ngIf="imageurl"  alt="image" [src]="imageurl">

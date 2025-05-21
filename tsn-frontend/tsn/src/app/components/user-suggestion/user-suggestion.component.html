@@ -2,6 +2,6 @@
   <div class="suggestion" *ngFor="let user of users">
     <p-avatar label="{{user.displayname[0].toUpperCase()}}" shape="circle"></p-avatar>
     <p>{{user.displayname}}</p>
-    <p-button label="Suivre" [rounded]="true"></p-button>
+    <p-button label="Suivre" (onClick)="addFriend(user.username)" [rounded]="true"></p-button>
   </div>
 </p-card>

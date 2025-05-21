@@ -88,4 +88,20 @@
   color: #0056b3;
 }
 
+.username {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+  display: inline-flex;
+  align-items: baseline; /* Aligns smaller text with baseline of larger */
+  gap: 0.25rem;
+}
+
+#username-gray {
+  color: #888888;
+  font-size: 0.85rem; /* Smaller than the main display name */
+  vertical-align: baseline;
+}
+
+
 

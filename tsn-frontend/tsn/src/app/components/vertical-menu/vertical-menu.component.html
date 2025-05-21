@@ -3,7 +3,7 @@
     <i class="pi pi-home"></i>
     <p>Accueil</p>
   </div>
-  <div (click)="router.navigate(['recherche'])">
+  <div (click)="router.navigate(['recherche'], {queryParams  : {r: ''}})">
     <i class="pi pi-search"></i>
     <p>Explorer</p>
   </div>

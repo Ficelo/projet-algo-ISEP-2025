@@ -3,11 +3,21 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 export interface Post {
+  id : string,
   username : string,
   text: string,
   image : string,
   date : Date,
 }
+
+export interface Like {
+  post_id : string,
+  username : string
+}
+
+// export interface Tag {
+//
+// }
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +42,10 @@ export class PostService {
 
   getPostsFromUser(username : string) {
     return this.http.get<Post[]>(`${this.apiUrl}/${encodeURIComponent(username)}`)
+  }
+
+  getAllLikesOfPost(id: string) {
+    return this.http.get<Like[]>(`${this.apiUrl}/likes/${id}`);
   }
 
 }

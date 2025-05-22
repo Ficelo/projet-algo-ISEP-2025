@@ -56,6 +56,7 @@ export class PostCreationPopupComponent {
     const user = this.userService.getCurrentUser() || this.errorUser;
 
     const post : Post = {
+      id : '',
       username : user.username,
       text: this.postText.value || "",
       image: this.imageBase64,

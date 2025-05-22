@@ -56,7 +56,7 @@ app.get('/api/users/:username', async (req, res) => {
 // Get all the posts
 app.get('/api/posts', async (req, res) => {
     try {
-        const result = await pool.query('SELECT username, text, image, date FROM posts');
+        const result = await pool.query('SELECT id, username, text, image, date FROM posts');
         const posts = result.rows.map(post => ({
             ...post,
             image: post.image
@@ -70,13 +70,24 @@ app.get('/api/posts', async (req, res) => {
     }
 });
 
+app.get('/api/posts/likes/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const result = await pool.query('SELECT post_id, username FROM post_likes WHERE post_id = $1', [id]);
+        res.json(result.rows);
+    } catch (err) {
+        res.status(500)
+        console.error(err);
+    }
+});
+
 // Get all the posts from a user
 app.get('/api/posts/:username', async (req, res) => {
     const { username } = req.params;
 
     try {
         const result = await pool.query(
-            'SELECT username, text, image, date FROM posts WHERE username = $1',
+            'SELECT id, username, text, image, date FROM posts WHERE username = $1',
             [username]
         );
 
@@ -146,7 +157,54 @@ app.get('/api/users/:username/friends', async (req, res) => {
         console.error(err);
         res.status(500).json({error : 'Server error'})
     }
-})
+});
+
+// O(log(f)) avec f le nombre d'amis
+// Get all the recommended friends based on who they are friends with
+app.get("/api/users/:username/recommended-foaf", async (req , res) => {
+    const { username } = req.params;
+
+    try {
+        const result = await pool.query(`
+            SELECT DISTINCT f2.friend_username AS suggestion
+            FROM friends f1
+            JOIN friends f2 ON f1.friend_username = f2.user_username
+            WHERE f1.user_username = $1
+              AND f2.friend_username != $1
+              AND f2.friend_username NOT IN (
+                  SELECT friend_username FROM friends WHERE user_username = $1
+              )
+        `, [username]);
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+// probablement O(log(f)) aussi du coup
+// Get all the recommended friends based on interests
+app.get("/api/users/:username/recommended-interests", async (req , res) => {
+    const { username } = req.params;
+
+    try {
+        const result = await pool.query(`
+            SELECT DISTINCT u.username
+            FROM users u
+                     JOIN user_interests ui1 ON ui1.username = u.username
+            WHERE ui1.interest IN (
+                SELECT interest FROM user_interests WHERE username = $1
+            )
+              AND u.username != $1
+              AND u.username NOT IN (
+                SELECT friend_username FROM friends WHERE user_username = $1);
+        `, [username]);
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
 
 // Create a new post
 app.post('/api/posts', async (req, res) => {
@@ -184,6 +242,9 @@ app.post('/api/posts/:id/like', async (req, res) => {
         res.status(500).json({ error: 'Could not like post' });
     }
 });
+
+
+
 
 
 app.listen(process.env.PORT, () => {

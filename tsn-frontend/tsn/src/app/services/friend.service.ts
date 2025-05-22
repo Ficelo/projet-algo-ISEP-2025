@@ -6,6 +6,10 @@ export interface Friend {
   friend_username : string;
 }
 
+export interface Suggestion {
+  suggestion : string;
+}
+
 @Injectable({
   providedIn: "root"
 })
@@ -24,6 +28,14 @@ export class FriendService {
 
   getFriends(username : string) {
     return this.http.get<Friend[]>(`${this.apiUrl}/${encodeURIComponent(username)}/friends`);
+  }
+
+  getRecommendedFriendsFromOtherFriends(username: string) {
+    return this.http.get<Suggestion[]>(`${this.apiUrl}/${encodeURIComponent(username)}/recommended-foaf`);
+  }
+
+  getRecommendedFriendsFromInterests(username: string) {
+    return this.http.get<Friend[]>(`${this.apiUrl}/${encodeURIComponent(username)}/recommended-interests`);
   }
 
 }

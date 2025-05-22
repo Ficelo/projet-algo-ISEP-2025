@@ -26,23 +26,27 @@ export class UserSuggestionComponent implements OnInit{
   constructor(private userService : UserService, private friendService : FriendService) {}
 
   ngOnInit() {
-    this.userService.getAllUsers().subscribe({
-      next: (data) => {
 
-        // TODO : ALGORITHME DE RECOMMENDATION
+    const loggedInUserName = this.userService.getCurrentUser()?.username || "";
 
-        const loggedInUserName = this.userService.getCurrentUser()?.username || "";
-
-        for (let user of data) {
-          if(user.username != loggedInUserName) {
-            this.users.push(user);
-          }
-        }
-
-        // this.users = data;
-        console.log(data);
+    this.friendService.getRecommendedFriendsFromOtherFriends(loggedInUserName).subscribe({
+      next: (friends) => {
+       for(let friend of friends) {
+         console.log(friend);
+         this.userService.getUser(friend.suggestion).subscribe({
+           next: (data) => {
+               if(data.username != loggedInUserName) {
+                 this.users.push(data);
+               }
+             // this.users = data;
+             //console.log(data);
+           }
+         })
+       }
       }
     })
+
+
   }
 
   addFriend(friendUsername : string) {

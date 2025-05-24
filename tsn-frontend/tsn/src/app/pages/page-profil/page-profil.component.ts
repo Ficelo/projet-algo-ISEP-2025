@@ -4,7 +4,7 @@ import {InputText} from 'primeng/inputtext';
 import {PostComponent} from '../../components/post/post.component';
 import {UserSuggestionComponent} from '../../components/user-suggestion/user-suggestion.component';
 import {VerticalMenuComponent} from '../../components/vertical-menu/vertical-menu.component';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {Avatar} from 'primeng/avatar';
 import {Button} from 'primeng/button';
 import {NgIf} from '@angular/common';
@@ -25,7 +25,8 @@ import {SearchbarComponent} from '../../components/searchbar/searchbar.component
     Button,
     NgIf,
     FeedComponent,
-    SearchbarComponent
+    SearchbarComponent,
+    RouterLink
   ],
   templateUrl: './page-profil.component.html',
   standalone: true,

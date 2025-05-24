@@ -214,11 +214,14 @@ app.post('/api/posts', async (req, res) => {
 
     try {
         const imageBuffer = image ? Buffer.from(image, 'base64') : null;
-        await pool.query(
-            'INSERT INTO posts (username, text, image, date) VALUES ($1, $2, $3, $4)',
+        const result = await pool.query(
+            'INSERT INTO posts (username, text, image, date) VALUES ($1, $2, $3, $4) RETURNING id',
             [username, text, imageBuffer || null, new Date()]
         );
-        res.status(201).json({ message: 'Post created' });
+
+        const createdId = result.rows[0].id;
+
+        res.status(201).json({ message: 'Post created', id: createdId});
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Could not create post' });
@@ -243,10 +246,77 @@ app.post('/api/posts/:id/like', async (req, res) => {
     }
 });
 
+app.post('/api/posts/:id/tags', async (req, res) => {
+    const postId = req.params.id;
+    const {tag} = req.body;
 
+    try {
+        await pool.query(
+            'INSERT INTO post_tags (post_id, tag) VALUES ($1, $2)', [postId, tag]
+        );
+        res.status(201).json({message : "Tag added"});
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Could not like post' });
+    }
 
+});
 
+app.get('/api/posts/:id/tags', async (req, res) => {
+    const postId = req.params.id;
+    //const {tag} = req.body;
+
+    try {
+        const result = await pool.query(
+            'SELECT post_id, tag FROM post_tags');
+        res.json(result.rows)
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Could not like post' });
+    }
+
+});
+
+app.get('/api/users/:username/tags', async (req, res) => {
+
+    const username = req.params.username;
+
+    try {
+        const result = await pool.query('SELECT username, tag FROM user_interests WHERE username = $1', [username]);
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Could not find tags' });
+    }
+
+})
+
+app.get('/api/posts/search/:search', async (req, res) => {
+    const search = req.params.search;
+
+    try {
+        const result = await pool.query(`
+            SELECT DISTINCT p.id, p.username, p.text, p.image, p.date
+            FROM posts p
+            LEFT JOIN post_tags pt ON p.id = pt.post_id
+            WHERE p.text ILIKE $1 OR pt.tag ILIKE $1
+        `, [`%${search}%`]);
+
+        const posts = result.rows.map(post => ({
+            ...post,
+            image: post.image
+                ? `data:image/png;base64,${post.image.toString('base64')}`
+                : ''
+        }));
+
+        res.json(posts);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error during search' });
+    }
+});
 
 app.listen(process.env.PORT, () => {
     console.log(`Backend running on http://localhost:${process.env.PORT}`);
 });
+

@@ -4,7 +4,7 @@ import {InputText} from 'primeng/inputtext';
 import {PostComponent} from '../../components/post/post.component';
 import {UserSuggestionComponent} from '../../components/user-suggestion/user-suggestion.component';
 import {VerticalMenuComponent} from '../../components/vertical-menu/vertical-menu.component';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FriendlistItemComponent} from '../../components/friendlist-item/friendlist-item.component';
 import {NgForOf} from '@angular/common';
 import {Friend, FriendService} from '../../services/friend.service';
@@ -31,16 +31,25 @@ import {SearchbarComponent} from '../../components/searchbar/searchbar.component
 export class PageAmisComponent implements OnInit{
 
   friends : User[] = []
+  username : string = "";
 
 
-  constructor(private router : Router, private friendService : FriendService, private userService : UserService, protected dateService : DateService) {
+  constructor(private router : Router, private friendService : FriendService, private userService : UserService, protected dateService : DateService, private route : ActivatedRoute) {
   }
 
   ngOnInit() {
 
-    const currentUser = this.userService.getCurrentUser();
+    this.route.paramMap.subscribe(params => {
+        this.username = params.get("username") || "";
+        if(this.username == ""){
+          this.username = this.userService.getCurrentUser()?.username || "";
+        }
+      }
+    )
 
-    this.friendService.getFriends(currentUser?.username || "").subscribe({
+    //const currentUser = this.userService.getCurrentUser();
+
+    this.friendService.getFriends(this.username).subscribe({
       next: (data) => {
         console.log(data);
         for (let friend of data){

@@ -1,7 +1,7 @@
 <div id="content">
   <ng-container *ngFor="let post of posts">
     <ng-container *ngIf="users[post.username] as user">
-      <app-post [post]="post"  [displayName]="users[post.username].displayname" [user]="post.username" [text]="post.text" [imageurl]="post.image"></app-post>
+      <app-post [post]="post"  [displayName]="user.displayname" [user]="post.username" [text]="post.text" [imageurl]="post.image"></app-post>
     </ng-container>
   </ng-container>
 </div>

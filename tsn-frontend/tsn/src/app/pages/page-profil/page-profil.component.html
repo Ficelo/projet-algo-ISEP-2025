@@ -16,7 +16,7 @@
       </div>
 
       <div class="subscribe-row">
-        <p class="friends-link" (click)="router.navigate(['amis'])">Friends : {{friends?.length || 0}}</p>
+        <a [routerLink]="['/amis', user?.username]"><p class="friends-link">Friends : {{friends?.length || 0}}</p></a>
         <!--   TODO : faire une fonction pour que ça aille sur les amis du user en question et pas du user connecté     -->
         <p-button *ngIf="otherUser" label="S'abonner"></p-button>
       </div>

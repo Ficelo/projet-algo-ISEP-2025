@@ -15,6 +15,14 @@
   <div class="dialog-body">
     <textarea pTextarea [formControl]="postText" rows="4" placeholder="Write a new post..." class="post-textarea"></textarea>
 
+    <div class="tags-input">
+      <input pInputText [formControl]="tagsText" placeholder="Tags..."><p-button (click)="addTag()">Add</p-button>
+    </div>
+
+    <div class="tags">
+      <p-chip *ngFor="let tag of tags" [label]="tag" [removable]="true" (onRemove)="removeTag(tag)"></p-chip>
+    </div>
+
     <p-fileupload
       mode="basic"
       chooseIcon="pi pi-upload"

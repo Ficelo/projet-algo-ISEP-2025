@@ -51,7 +51,6 @@ export class PostComponent implements OnInit{
             this.postLiked = true;
           }
         }
-        console.log("post likes ", data);
       }
     })
 
@@ -59,6 +58,13 @@ export class PostComponent implements OnInit{
 
   likePressed() {
     this.postLiked = !this.postLiked;
+
+    const currentUsername = this.userService.getCurrentUser()?.username || "";
+
+    if(this.postLiked) {
+      this.postService.postLike(this.post.id, currentUsername).subscribe()
+    }
+
   }
 
 }

@@ -4,7 +4,8 @@
   <div id="content">
     <app-friendlist-item
       *ngFor="let user of friends"
-      username="{{user.displayname}}"
+      displayName="{{user.displayname}}"
+      username="{{user.username}}"
       lastActivity="Last message {{dateService.timeAgo(user.last_connection_date)}}">
     </app-friendlist-item>
   </div>

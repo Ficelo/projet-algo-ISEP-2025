@@ -6,19 +6,24 @@ import {Post, PostService} from '../../services/post.service';
 import {User, UserService} from '../../services/user.service';
 import {FileUpload, UploadEvent} from 'primeng/fileupload';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
+import {InputText} from 'primeng/inputtext';
+import {Chip} from 'primeng/chip';
+import {NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-post-creation-popup',
   standalone: true,
   templateUrl: './post-creation-popup.component.html',
   styleUrl: './post-creation-popup.component.scss',
-  imports: [Button, Dialog, Textarea, FileUpload, ReactiveFormsModule]
+  imports: [Button, Dialog, Textarea, FileUpload, ReactiveFormsModule, InputText, Chip, NgForOf]
 })
 export class PostCreationPopupComponent {
   visible: boolean = false;
   postText=  new FormControl("");
+  tagsText = new FormControl("")
   imageBase64: string = '';
   errorUser : User;
+  tags : string[] =  [];
 
   constructor(private postService: PostService, private userService: UserService) {
 
@@ -34,6 +39,22 @@ export class PostCreationPopupComponent {
 
   showDialog() {
     this.visible = true;
+  }
+
+  addTag() {
+
+    if(this.tagsText.value){
+      this.tags.push(this.tagsText.value || "");
+      this.tagsText.setValue("");
+    }
+
+  }
+
+  removeTag(tag : string) {
+    let index = this.tags.indexOf(tag);
+    if (index !== -1) {
+      this.tags.splice(index, 1);
+    }
   }
 
   onFileSelect(event: { files: File[] }) {
@@ -67,6 +88,14 @@ export class PostCreationPopupComponent {
       next: res => {
         console.log('Post created:', res);
         this.resetForm();
+
+        for(let tag of this.tags) {
+          this.postService.postTag(res.id, tag).subscribe({
+            next : res => {
+              console.log(res);
+            }
+          });
+        }
       },
       error: err => console.error('Error creating post:', err)
     });

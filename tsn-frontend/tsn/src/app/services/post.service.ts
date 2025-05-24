@@ -15,9 +15,10 @@ export interface Like {
   username : string
 }
 
-// export interface Tag {
-//
-// }
+export interface Tag {
+  post_id : string,
+  tag : string
+}
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +47,26 @@ export class PostService {
 
   getAllLikesOfPost(id: string) {
     return this.http.get<Like[]>(`${this.apiUrl}/likes/${id}`);
+  }
+
+  postLike(postId : string, username : string) {
+    return this.http.post<Like>(`${this.apiUrl}/${postId}/like`, {
+      username : username
+    })
+  }
+
+  postTag(postId : string, tag : string) {
+    return this.http.post<Tag>(`${this.apiUrl}/${postId}/tags`, {
+      tag : tag
+    })
+  }
+
+  getTags(postId : string) {
+    return this.http.get<Tag[]>(`${this.apiUrl}/${postId}/tags`);
+  }
+
+  getPostsBySearchAndTag(search : string){
+    return this.http.get<Post[]>(`${this.apiUrl}/search/${search}`);
   }
 
 }

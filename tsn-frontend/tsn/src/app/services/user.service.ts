@@ -5,11 +5,16 @@ import {catchError, map, Observable, of, tap} from 'rxjs';
 import {MessageService} from 'primeng/api';
 
 export interface User {
-  "username": string;
-  "displayname": string;
-  "password" : string;
-  "settings": {};
-  "last_connection_date": Date;
+  username : string,
+  displayname : string,
+  password : string,
+  settings : {},
+  last_connection_date : Date,
+}
+
+export interface Interest {
+  username : string,
+  interest : string
 }
 
 @Injectable({
@@ -66,9 +71,14 @@ export class UserService {
     return this.user;
   }
 
+
   getUser(username : string) : Observable<User> {
     //console.log(`${this.apiPath}/${encodeURIComponent(username)}`);
     return this.http.get<User>(`${this.apiPath}/${encodeURIComponent(username)}`);
+  }
+
+  getUserInterests(username : string) {
+    return this.http.get<Interest[]>(`${this.apiPath}/${encodeURIComponent(username)}/tags`)
   }
 
   getAllUsers() {

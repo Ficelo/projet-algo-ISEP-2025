@@ -1,7 +1,5 @@
 <p-card header="Suggestions" id="suggestion-container">
-  <div class="suggestion" *ngFor="let user of users">
-    <p-avatar label="{{user.displayname[0].toUpperCase()}}" shape="circle"></p-avatar>
-    <p>{{user.displayname}}</p>
-    <p-button label="Suivre" (onClick)="addFriend(user.username)" [rounded]="true"></p-button>
-  </div>
+  <app-suggestion *ngFor="let user of usersFOAF" [user]="user"></app-suggestion>
+  <p-divider></p-divider>
+  <app-suggestion *ngFor="let user of usersInterests" [user]="user"></app-suggestion>
 </p-card>

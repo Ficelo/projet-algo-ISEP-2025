@@ -189,7 +189,7 @@ app.get("/api/users/:username/recommended-interests", async (req , res) => {
 
     try {
         const result = await pool.query(`
-            SELECT DISTINCT u.username
+            SELECT DISTINCT u.username as suggestion
             FROM users u
                      JOIN user_interests ui1 ON ui1.username = u.username
             WHERE ui1.interest IN (

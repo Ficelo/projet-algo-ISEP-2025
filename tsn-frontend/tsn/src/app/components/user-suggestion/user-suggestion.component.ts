@@ -5,6 +5,8 @@ import {Button} from 'primeng/button';
 import {User, UserService} from '../../services/user.service';
 import {NgForOf, NgIf} from '@angular/common';
 import {FriendService} from '../../services/friend.service';
+import {SuggestionComponent} from '../suggestion/suggestion.component';
+import {Divider} from 'primeng/divider';
 
 @Component({
   selector: 'app-user-suggestion',
@@ -13,7 +15,9 @@ import {FriendService} from '../../services/friend.service';
     Card,
     Button,
     NgForOf,
-    NgIf
+    NgIf,
+    SuggestionComponent,
+    Divider
   ],
   templateUrl: './user-suggestion.component.html',
   standalone: true,
@@ -21,7 +25,8 @@ import {FriendService} from '../../services/friend.service';
 })
 export class UserSuggestionComponent implements OnInit{
 
-  users : User[] = [];
+  usersFOAF : User[] = [];
+  usersInterests : User[] = [];
 
   constructor(private userService : UserService, private friendService : FriendService) {}
 
@@ -35,8 +40,8 @@ export class UserSuggestionComponent implements OnInit{
          console.log(friend);
          this.userService.getUser(friend.suggestion).subscribe({
            next: (data) => {
-               if(data.username != loggedInUserName) {
-                 this.users.push(data);
+               if(data.username != loggedInUserName && !this.usersInterests.includes(data)) {
+                 this.usersFOAF.push(data);
                }
              // this.users = data;
              //console.log(data);
@@ -44,23 +49,23 @@ export class UserSuggestionComponent implements OnInit{
          })
        }
       }
-    })
-
-
-  }
-
-  addFriend(friendUsername : string) {
-
-    const loggedInUserName = this.userService.getCurrentUser()?.username || "";
-
-    this.friendService.addFriend(loggedInUserName, friendUsername).subscribe({
-      next: (data) => {
-        console.log("friend added", data);
-      },
-      error : (err) => {
-        console.error(err);
-    }
     });
 
+    this.friendService.getRecommendedFriendsFromInterests(loggedInUserName).subscribe({
+      next : (friends) => {
+        for( let friend of friends) {
+          this.userService.getUser(friend.suggestion).subscribe({
+            next: (data) => {
+              if(data.username != loggedInUserName && !this.usersFOAF.includes(data)) {
+                this.usersInterests.push(data);
+              }
+            }
+          })
+        }
+      }
+    })
+
   }
+
+
 }

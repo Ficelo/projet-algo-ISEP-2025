@@ -1,0 +1,5 @@
+<div class="suggestion" >
+  <p-avatar label="{{user.displayname[0].toUpperCase()}}" shape="circle"></p-avatar>
+  <p>{{user.displayname}}</p>
+  <p-button label="Suivre" (onClick)="addFriend(user.username)" [rounded]="true"></p-button>
+</div>

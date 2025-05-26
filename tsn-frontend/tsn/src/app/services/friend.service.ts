@@ -35,7 +35,7 @@ export class FriendService {
   }
 
   getRecommendedFriendsFromInterests(username: string) {
-    return this.http.get<Friend[]>(`${this.apiUrl}/${encodeURIComponent(username)}/recommended-interests`);
+    return this.http.get<Suggestion[]>(`${this.apiUrl}/${encodeURIComponent(username)}/recommended-interests`);
   }
 
 }

@@ -19,4 +19,10 @@ export class FriendlistItemComponent {
   @Input() lastActivity : string = "";
 
   protected readonly navigator = navigator;
+
+  constructor() {
+    this.username = "test";
+    this.displayName = "test";
+    this.lastActivity = "test";
+  }
 }

@@ -17,6 +17,7 @@ import {Avatar} from 'primeng/avatar';
 export class SuggestionComponent {
 
   @Input() user : User;
+  enabled : boolean = true;
 
   constructor(private userService : UserService, private friendService : FriendService) {
     this.user = {
@@ -35,6 +36,7 @@ export class SuggestionComponent {
     this.friendService.addFriend(loggedInUserName, friendUsername).subscribe({
       next: (data) => {
         console.log("friend added", data);
+        this.enabled = false;
       },
       error : (err) => {
         console.error(err);

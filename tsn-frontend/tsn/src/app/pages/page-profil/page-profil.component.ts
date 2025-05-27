@@ -34,7 +34,7 @@ import {SearchbarComponent} from '../../components/searchbar/searchbar.component
 })
 export class PageProfilComponent implements OnInit{
 
-  user : User | null = null;
+  user? : User;
   otherUser : boolean = false;
   friends : Friend[] | null = [];
 
@@ -42,6 +42,20 @@ export class PageProfilComponent implements OnInit{
     // Faire un truc genre if u=null (query param d'un user)
     // Si c'est null on affiche le profil du user connecté => otherUser = false;
     // Sinon bah l'autre logique
+
+    this.user = {
+      username : "placeholder",
+      displayname : "placeholder",
+      password : "placeholder",
+      settings : {},
+      last_connection_date : new Date()
+    }
+
+  }
+
+  get avatarLabel(): string {
+    const name = this.user?.displayname;
+    return name && name.length > 0 ? name[0].toUpperCase() : '?';
   }
 
   ngOnInit() {

@@ -5,7 +5,7 @@
       <label for="username">Username</label>
     </p-float-label>
     <p-float-label variant="on">
-      <input pInputText id="password" [formControl]="passwordLoginControl"/>
+      <input pInputText type="password" id="password" [formControl]="passwordLoginControl"/>
       <label for="password">Password</label>
     </p-float-label>
     <p-button (onClick)="connectUser()"  label="Log in"></p-button>
@@ -21,7 +21,7 @@
       <label for="display-name">Display name</label>
     </p-float-label>
     <p-float-label variant="on">
-      <input pInputText id="password-signup" [formControl]="passwordControl"/>
+      <input pInputText type="password" id="password-signup" [formControl]="passwordControl"/>
       <label for="password-signup">Password</label>
     </p-float-label>
     <p-button (onClick)="createUser()" [disabled]="!getFormCompletedSignIn()" label="Create account"></p-button>

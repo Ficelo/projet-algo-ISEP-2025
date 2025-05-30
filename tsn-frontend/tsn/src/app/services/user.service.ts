@@ -8,7 +8,9 @@ export interface User {
   username : string,
   displayname : string,
   password : string,
-  settings : {},
+  settings : {
+    description? : string,
+  },
   last_connection_date : Date,
 }
 
@@ -126,5 +128,27 @@ export class UserService {
       "last_connection_date": user.last_connection_date.toISOString()
     });
   }
+
+  updateUser(username: string, updates: Partial<User>) {
+    console.log("updateing");
+    return this.http.put(`${this.apiPath}/${encodeURIComponent(username)}`, updates);
+  }
+
+  updateUserInterests(username: string, interests: string[]) {
+    return this.http.put(`${this.apiPath}/${encodeURIComponent(username)}/interests`, {
+      interests: interests
+    });
+  }
+
+  deleteUserInterest(username: string, interest: string) {
+    return this.http.delete(`${this.apiPath}/${encodeURIComponent(username)}/interests/${encodeURIComponent(interest)}`);
+  }
+
+
+  addUserInterest(username: string, interest: string) {
+    return this.http.post(`${this.apiPath}/${encodeURIComponent(username)}/interests`, { interest });
+  }
+
+
 
 }

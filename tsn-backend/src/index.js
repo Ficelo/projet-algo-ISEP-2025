@@ -159,6 +159,46 @@ app.get('/api/users/:username/friends', async (req, res) => {
     }
 });
 
+app.put('/api/users/:username', async (req, res) => {
+    const { username } = req.params;
+    const { displayname, password, settings } = req.body;
+
+    if (!displayname && !password && !settings) {
+        return res.status(400).json({ error: 'At least one field (displayname, password, settings) required' });
+    }
+
+    const fields = [];
+    const values = [];
+    let idx = 1;
+
+    if (displayname) {
+        fields.push(`displayname = $${idx++}`);
+        values.push(displayname);
+    }
+    if (password) {
+        fields.push(`password = $${idx++}`);
+        values.push(password);
+    }
+    if (settings) {
+        fields.push(`settings = $${idx++}`);
+        values.push(settings);
+    }
+
+    values.push(username);
+
+    const query = `UPDATE users SET ${fields.join(', ')} WHERE username = $${idx}`;
+
+    try {
+        await pool.query(query, values);
+        res.status(200).json({ message: 'User updated' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Could not update user' });
+    }
+});
+
+
+
 // O(log(f)) avec f le nombre d'amis
 // Get all the recommended friends based on who they are friends with
 app.get("/api/users/:username/recommended-foaf", async (req , res) => {
@@ -281,15 +321,52 @@ app.get('/api/users/:username/tags', async (req, res) => {
 
     const username = req.params.username;
 
+    console.log(username);
+
     try {
-        const result = await pool.query('SELECT username, tag FROM user_interests WHERE username = $1', [username]);
+        const result = await pool.query('SELECT username, interest FROM user_interests WHERE username = $1', [username]);
         res.json(result.rows);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Could not find tags' });
     }
 
-})
+});
+
+app.put('/api/users/:username/interests', async (req, res) => {
+    const { username } = req.params;
+    const { interests } = req.body; // expected to be an array of strings
+
+    if (!Array.isArray(interests)) {
+        return res.status(400).json({ error: 'Interests should be an array' });
+    }
+
+    const client = await pool.connect();
+
+    try {
+        await client.query('BEGIN');
+
+        await client.query('DELETE FROM user_interests WHERE username = $1', [username]);
+
+        for (const interest of interests) {
+            await client.query(
+                'INSERT INTO user_interests (username, interest) VALUES ($1, $2)',
+                [username, interest]
+            );
+        }
+
+        await client.query('COMMIT');
+
+        res.json({ message: 'Interests updated' });
+    } catch (err) {
+        await client.query('ROLLBACK');
+        console.error(err);
+        res.status(500).json({ error: 'Could not update interests' });
+    } finally {
+        client.release();
+    }
+});
+
 
 app.get('/api/posts/search/:search', async (req, res) => {
     const search = req.params.search;
@@ -315,6 +392,49 @@ app.get('/api/posts/search/:search', async (req, res) => {
         res.status(500).json({ error: 'Server error during search' });
     }
 });
+
+app.delete('/api/users/:username/interests/:interest', async (req, res) => {
+    const { username, interest } = req.params;
+
+    try {
+        const result = await pool.query(
+            'DELETE FROM user_interests WHERE username = $1 AND interest = $2',
+            [username, interest]
+        );
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({ error: 'Interest not found for user' });
+        }
+
+        res.json({ message: 'Interest deleted' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Could not delete interest' });
+    }
+});
+
+// Add an interest for a user
+app.post('/api/users/:username/interests', async (req, res) => {
+    const { username } = req.params;
+    const { interest } = req.body;
+
+    if (!interest) {
+        return res.status(400).json({ error: 'Interest is required' });
+    }
+
+    try {
+        await pool.query(
+            'INSERT INTO user_interests (username, interest) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+            [username, interest]
+        );
+
+        res.status(201).json({ message: 'Interest added' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Could not add interest' });
+    }
+});
+
 
 app.listen(process.env.PORT, () => {
     console.log(`Backend running on http://localhost:${process.env.PORT}`);

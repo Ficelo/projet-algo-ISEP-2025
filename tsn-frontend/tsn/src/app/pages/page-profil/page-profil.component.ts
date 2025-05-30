@@ -35,7 +35,7 @@ import {SearchbarComponent} from '../../components/searchbar/searchbar.component
 export class PageProfilComponent implements OnInit{
 
   user? : User;
-  otherUser : boolean = false;
+  otherUser : boolean = true;
   friends : Friend[] | null = [];
 
   constructor(protected router : Router, private route : ActivatedRoute, private userService : UserService, private friendService : FriendService) {
@@ -61,7 +61,10 @@ export class PageProfilComponent implements OnInit{
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
       let username = params.get("username");
-      if(!username) {username = this.userService.getCurrentUser()?.username || ""}
+      if(!username) {
+        username = this.userService.getCurrentUser()?.username || "";
+        this.otherUser = false;
+      }
       this.userService.getUser(username).subscribe({
         next: (data) => {
           this.user = data;

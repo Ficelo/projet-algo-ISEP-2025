@@ -2,7 +2,17 @@
   <app-vertical-menu></app-vertical-menu>
 
   <div id="content">
-    <span *ngIf="isRecherche()">Résultats pour : {{recherche}}</span>
+<!--    <span *ngIf="isRecherche()">Résultats pour : {{recherche}}</span>-->
+    <div>
+
+      <div class="button-wrapper">
+        <p-selectButton [options]="topFiveInterestKeys" [(ngModel)]="value" (onOptionClick)="applyInterest()">
+          <ng-template let-item pTemplate="item">
+            <p>{{item}}</p>
+          </ng-template>
+        </p-selectButton>
+      </div>
+    </div>
     <app-feed [search]="recherche"></app-feed>
   </div>
 

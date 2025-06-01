@@ -4,7 +4,7 @@ import {Button} from 'primeng/button';
 import {NgIf} from '@angular/common';
 import {Avatar} from 'primeng/avatar';
 import {RouterLink} from '@angular/router';
-import {Post, PostService} from '../../services/post.service';
+import {Post, PostService, Tag} from '../../services/post.service';
 import {UserService} from '../../services/user.service';
 
 @Component({
@@ -63,7 +63,17 @@ export class PostComponent implements OnInit{
 
     if(this.postLiked) {
       this.postService.postLike(this.post.id, currentUsername).subscribe()
+
+      this.postService.getTags(this.post.id).subscribe({
+        next: (value) => {
+          for(let tag of value) {
+            this.userService.addUserInterest(currentUsername, tag.tag).subscribe();
+          }
+      }
+      })
+
     }
+
 
   }
 

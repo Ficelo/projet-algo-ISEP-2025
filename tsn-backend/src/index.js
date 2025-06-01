@@ -435,6 +435,66 @@ app.post('/api/users/:username/interests', async (req, res) => {
     }
 });
 
+// Get all messages between users
+app.get('/api/messages', async (req, res) => {
+    const { user1, user2 } = req.query;
+
+    if (!user1 || !user2) {
+        return res.status(400).json({ error: 'user1 and user2 are required' });
+    }
+
+    try {
+        const result = await pool.query(`
+            SELECT id, sender_username, receiver_username, text, image, date
+            FROM messages
+            WHERE (sender_username = $1 AND receiver_username = $2)
+               OR (sender_username = $2 AND receiver_username = $1)
+            ORDER BY date ASC
+        `, [user1, user2]);
+
+        const messages = result.rows.map(msg => ({
+            ...msg,
+            image: msg.image
+                ? `data:image/png;base64,${msg.image.toString('base64')}`
+                : ''
+        }));
+
+        res.json(messages);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error fetching messages' });
+    }
+});
+
+// Send a messages
+app.post('/api/messages', async (req, res) => {
+    const { sender_username, receiver_username, text, image } = req.body;
+
+    if (!sender_username || !receiver_username || (!text && !image)) {
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    try {
+        const imageBuffer = image ? Buffer.from(image, 'base64') : null;
+        const result = await pool.query(`
+            INSERT INTO messages (sender_username, receiver_username, text, image, date)
+            VALUES ($1, $2, $3, $4, $5)
+            RETURNING id, sender_username, receiver_username, text, image, date
+        `, [sender_username, receiver_username, text, imageBuffer, new Date()]);
+
+        const savedMessage = result.rows[0];
+        savedMessage.image = savedMessage.image
+            ? `data:image/png;base64,${savedMessage.image.toString('base64')}`
+            : '';
+
+        res.status(201).json(savedMessage);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error sending message' });
+    }
+});
+
+
 
 app.listen(process.env.PORT, () => {
     console.log(`Backend running on http://localhost:${process.env.PORT}`);

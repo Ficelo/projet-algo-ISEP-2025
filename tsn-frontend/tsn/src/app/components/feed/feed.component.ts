@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {Post, PostService} from '../../services/post.service';
 import {User, UserService} from '../../services/user.service';
 import {Router} from '@angular/router';
@@ -17,7 +17,7 @@ import {forkJoin} from 'rxjs';
   standalone: true,
   styleUrl: './feed.component.scss'
 })
-export class FeedComponent implements OnInit {
+export class FeedComponent implements OnChanges {
 
   posts: Post[] = []
   users: Record<string, User | undefined> = {};
@@ -32,7 +32,12 @@ export class FeedComponent implements OnInit {
   // No troll c'est de la magie noire ce que j'ai pondu
   // Vaut mieux plus toucher tant que ça marche
 
-  ngOnInit() {
+  ngOnChanges() {
+    this.posts  = [];
+    this.loadPosts();
+  }
+
+  loadPosts() {
     if (this.search) {
       this.postService.getPostsBySearchAndTag(this.search).subscribe({
         next: (data) => {
@@ -80,4 +85,5 @@ export class FeedComponent implements OnInit {
       });
     }
   }
+
 }

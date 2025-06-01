@@ -17,7 +17,7 @@
 
       <div class="subscribe-row">
         <a [routerLink]="['/amis', user?.username]"><p class="friends-link">Friends : {{friends?.length || 0}}</p></a>
-        <p-button *ngIf="otherUser" label="S'abonner"></p-button>
+        <p-button *ngIf="otherUser" label="S'abonner" (onClick)="addFriend(user?.username || '')"></p-button>
       </div>
     </div>
 

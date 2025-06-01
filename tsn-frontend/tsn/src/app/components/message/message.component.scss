@@ -1,12 +1,16 @@
 :host {
   display: flex;
   width: 100%;
-  justify-content: flex-start;
 }
 
 :host(.self) {
   justify-content: flex-end;
 }
+
+:host(:not(.self)) {
+  justify-content: flex-start;
+}
+
 
 .message-bubble {
   border-radius: 12px;
@@ -20,12 +24,10 @@
 
 .message-bubble-other {
   background-color: #e1ffc7;
-  align-self: flex-start;
 }
 
 .message-bubble-self {
   background-color: #a2a2ff;
-  align-self: flex-end;
 }
 
 

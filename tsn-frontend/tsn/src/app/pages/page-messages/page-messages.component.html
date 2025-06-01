@@ -3,23 +3,28 @@
 
   <div class="friend-list">
     <app-friendlist-item
-      *ngFor="let i of [].constructor(20)"
-      username="TEST USER"
-      lastActivity="Dernier message il y a 20 minutes">
+      *ngFor="let friend of friends"
+      displayName="{{friend.displayname}}"
+      lastActivity="Dernier message il y a 20 minutes"
+      (click)="setCurrentTarget(friend.username)"
+    >
     </app-friendlist-item>
   </div>
 
   <div class="chat">
     <div class="chat-header">
-      <p-avatar></p-avatar>
-      <p class="chat-username">USERNAME</p>
+      <p-avatar label="{{currentTarget[0].toUpperCase() || '?'}}"></p-avatar>
+      <p class="chat-username">{{currentTarget}}</p>
     </div>
     <div class="chat-messages">
-      <app-message messageText="Super message de fou malade" imageLink="assets/images/dog.webp"></app-message>
-      <app-message messageText="Super message de fou malade"></app-message>
-      <app-message messageText="Super message de fou malade"></app-message>
-      <app-message class="self" fromSelf="true" messageText="Super message de fou malade"></app-message>
-      <app-message messageText="Super message de fou malade"></app-message>
+<!--      <app-message messageText="Super message de fou malade" imageLink="assets/images/dog.webp"></app-message>-->
+<!--      <app-message class="self" fromSelf="true" messageText="Super message de fou malade"></app-message>-->
+      <app-message *ngFor="let message of messages"
+                   [messageText]="message.text"
+                   [imageLink]="message.image"
+                   [fromSelf]="currentUsername === message.sender_username"
+                   [ngClass]="{'self': currentUsername === message.sender_username}">
+      </app-message>
     </div>
     <div id="input-bar">
       <input pInputText placeholder="Entrez votre message">

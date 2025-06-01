@@ -83,4 +83,17 @@ export class PageProfilComponent implements OnInit{
     this.router.navigate(["recherche"], {queryParams : {r : "super recherche test"}})
   }
 
+  addFriend(friendUsername : string) {
+    const loggedInUserName = this.userService.getCurrentUser()?.username || "";
+
+    this.friendService.addFriend(loggedInUserName, friendUsername).subscribe({
+      next: (data) => {
+        console.log("friend added", data);
+      },
+      error : (err) => {
+        console.error(err);
+      }
+    });
+  }
+
 }

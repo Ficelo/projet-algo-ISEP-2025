@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FloatLabel} from 'primeng/floatlabel';
 import {InputText} from 'primeng/inputtext';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
@@ -15,11 +15,22 @@ import {FormControl, ReactiveFormsModule} from '@angular/forms';
   standalone: true,
   styleUrl: './searchbar.component.scss'
 })
-export class SearchbarComponent {
+export class SearchbarComponent implements OnInit{
 
   searchControl = new FormControl("");
 
-  constructor(protected router : Router) {
+  constructor(protected router : Router, private route : ActivatedRoute) {
+  }
+
+  ngOnInit() {
+
+    this.route.queryParams.subscribe(params => {
+      const searchParam = params['r'];
+      if (searchParam) {
+        this.searchControl.setValue(searchParam);
+      }
+    });
+
   }
 
   rechercher() {

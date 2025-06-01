@@ -61,21 +61,32 @@ export class PageReglagesComponent implements OnInit {
     }
   }
 
-  onRemoveInterest(tag : Interest) {
-    let index = this.interests.indexOf(tag);
-    if (index !== -1) {
-      this.interests.splice(index, 1);
-    }
+  get uniqueInterests(): Interest[] {
+    const seen = new Set<string>();
+    return this.interests.filter(i => {
+      if (seen.has(i.interest)) {
+        return false;
+      } else {
+        seen.add(i.interest);
+        return true;
+      }
+    });
+  }
 
+
+  onRemoveInterest(tag: Interest) {
+    // Filter out all interests matching the deleted interest
+    this.interests = this.interests.filter(i => i.interest !== tag.interest);
+
+    // Call backend to delete all user interests matching this interest
     this.userService.deleteUserInterest(this.user?.username || "", tag.interest).subscribe({
-      next : (value) => {
-        console.log(value)
+      next: (value) => {
+        console.log('Deleted all duplicates of', tag.interest, value);
       },
-      error : (err) => {
+      error: (err) => {
         console.error(err);
       }
     });
-
   }
 
   onAddInterest() {

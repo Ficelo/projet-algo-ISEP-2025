@@ -17,7 +17,7 @@ import {forkJoin} from 'rxjs';
   standalone: true,
   styleUrl: './feed.component.scss'
 })
-export class FeedComponent implements OnChanges {
+export class FeedComponent implements OnChanges, OnInit {
 
   posts: Post[] = []
   users: Record<string, User | undefined> = {};
@@ -32,12 +32,18 @@ export class FeedComponent implements OnChanges {
   // No troll c'est de la magie noire ce que j'ai pondu
   // Vaut mieux plus toucher tant que ça marche
 
+  ngOnInit() {
+    this.loadPosts();
+  }
+
+
   ngOnChanges() {
     this.posts  = [];
     this.loadPosts();
   }
 
   loadPosts() {
+    console.log("load posts")
     if (this.search) {
       this.postService.getPostsBySearchAndTag(this.search).subscribe({
         next: (data) => {

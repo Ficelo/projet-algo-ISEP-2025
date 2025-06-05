@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit} from '@angular/core';
 import {FriendlistItemComponent} from '../../components/friendlist-item/friendlist-item.component';
 import {Avatar} from 'primeng/avatar';
 import {MessageComponent} from '../../components/message/message.component';
@@ -9,6 +9,8 @@ import {Button} from 'primeng/button';
 import {Friend, FriendService} from '../../services/friend.service';
 import {User, UserService} from '../../services/user.service';
 import {Message, MessageService} from '../../services/messages.service';
+import {FormControl, ReactiveFormsModule} from '@angular/forms';
+import {interval, Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-page-messages',
@@ -20,7 +22,8 @@ import {Message, MessageService} from '../../services/messages.service';
     VerticalMenuComponent,
     InputText,
     Button,
-    NgClass
+    NgClass,
+    ReactiveFormsModule
   ],
   templateUrl: './page-messages.component.html',
   standalone: true,
@@ -32,8 +35,11 @@ export class PageMessagesComponent implements OnInit{
   currentTarget : string = "";
   messages : Message[] = [];
   currentUsername : string = "";
+  messageText  = new FormControl("");
+  messageSub : Subscription = new Subscription();
 
   constructor(private userService : UserService, private friendService : FriendService, private messageService : MessageService) {
+
   }
 
   ngOnInit() {
@@ -54,6 +60,10 @@ export class PageMessagesComponent implements OnInit{
           })
         }
       }
+    });
+
+    this.messageSub = interval(500).subscribe(() => {
+      this.getMessages();
     })
 
   }
@@ -68,6 +78,19 @@ export class PageMessagesComponent implements OnInit{
       }
     })
 
+  }
+
+  postMessage() {
+    if(this.messageText.value != "") {
+      this.messageService.sendMessage(this.currentUsername, this.currentTarget, this.messageText.value || "").subscribe(
+        {
+          next : (value) => {
+            console.log(value)
+            this.messageText.setValue("");
+          }
+        }
+      );
+    }
   }
 
   setCurrentTarget(username : string) {

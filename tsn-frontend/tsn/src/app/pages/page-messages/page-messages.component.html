@@ -13,7 +13,7 @@
 
   <div class="chat">
     <div class="chat-header">
-      <p-avatar label="{{'?'}}"></p-avatar>
+      <p-avatar label="{{currentTargetUsername}}"></p-avatar>
       <p class="chat-username">{{currentTarget}}</p>
     </div>
     <div class="chat-messages">
@@ -27,7 +27,7 @@
       </app-message>
     </div>
     <div id="input-bar">
-      <input pInputText placeholder="Entrez votre message" [formControl]="messageText">
+      <input pInputText placeholder="Entrez votre message" [formControl]="messageText" (keyup.enter)="postMessage()">
       <p-button icon="pi pi-plus" (click)="postMessage()"/>
     </div>
   </div>

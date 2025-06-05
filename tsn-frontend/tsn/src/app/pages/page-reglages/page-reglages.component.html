@@ -10,14 +10,18 @@
       <input pInputText placeholder="Display name" value="{{user?.displayname}}" [formControl]="displayNameText">
       <p-button label="Change name" (click)="onChangeDisplayName()"></p-button>
       <br>
+      <br>
 
       <input pTextarea placeholder="Profile description" value="{{user?.settings?.description}}" [formControl]="descriptionText">
       <p-button label="Change description" (click)="onChangeDescription()"></p-button>
+      <br>
       <br>
 
       <h2>Interests</h2>
       <input pInputText placeholder="Add interest" [formControl]="interestText">
       <p-button label="Add" (onClick)="onAddInterest()"></p-button>
+      <br>
+      <br>
       <div class="interests">
           <p-chip *ngFor="let tag of uniqueInterests" [label]="tag.interest" [removable]="true" (onRemove)="onRemoveInterest(tag)"></p-chip>
       </div>

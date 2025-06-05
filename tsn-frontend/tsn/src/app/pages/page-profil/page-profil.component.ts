@@ -36,6 +36,7 @@ export class PageProfilComponent implements OnInit{
 
   user? : User;
   otherUser : boolean = true;
+  subbed : boolean = false;
   friends : Friend[] | null = [];
 
   constructor(protected router : Router, private route : ActivatedRoute, private userService : UserService, private friendService : FriendService) {
@@ -69,6 +70,18 @@ export class PageProfilComponent implements OnInit{
         next: (data) => {
           this.user = data;
           console.log("user in profil :", this.user);
+          let currentUser = this.userService.getCurrentUser();
+          this.friendService.getFriends(currentUser?.username || "").subscribe({
+            next: (value) => {
+              for (let friend of value) {
+                console.log(friend)
+                console.log(`${friend.friend_username} == ${this.user?.username}` )
+                if(friend.friend_username == this.user?.username){
+                  this.subbed = true;
+                }
+              }
+            }
+          })
         }
       })
       this.friendService.getFriends(username).subscribe({
@@ -77,6 +90,9 @@ export class PageProfilComponent implements OnInit{
         }
       })
     });
+
+
+
   }
 
   rechercher() {

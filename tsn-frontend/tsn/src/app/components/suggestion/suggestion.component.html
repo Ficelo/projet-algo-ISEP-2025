@@ -1,5 +1,5 @@
 <div class="suggestion" >
   <p-avatar label="{{user.displayname[0].toUpperCase()}}" shape="circle"></p-avatar>
-  <p>{{user.displayname}}</p>
+  <a [routerLink]="['/profil', user.username]"><p>{{user.displayname}}</p></a>
   <p-button label="Suivre" (onClick)="addFriend(user.username)" [rounded]="true" [disabled]="!enabled"></p-button>
 </div>

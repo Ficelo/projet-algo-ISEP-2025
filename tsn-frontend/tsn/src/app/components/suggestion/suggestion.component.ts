@@ -3,12 +3,14 @@ import {User, UserService} from '../../services/user.service';
 import {FriendService} from '../../services/friend.service';
 import {Button} from 'primeng/button';
 import {Avatar} from 'primeng/avatar';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-suggestion',
   imports: [
     Button,
-    Avatar
+    Avatar,
+    RouterLink
   ],
   templateUrl: './suggestion.component.html',
   standalone: true,
@@ -28,6 +30,8 @@ export class SuggestionComponent {
       settings : {}
     }
   }
+
+
 
   addFriend(friendUsername : string) {
 

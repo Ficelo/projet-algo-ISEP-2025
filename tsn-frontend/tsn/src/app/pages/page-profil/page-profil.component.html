@@ -11,13 +11,13 @@
             {{ user?.displayname }}
             <span id="username-gray">{{user?.username }}</span>
           </span>
-          <p id="description">Super description test de fou malade, là vraiment c'est une dinguerie</p>
+          <p id="description">{{user?.settings?.description || "Super description test de fou malade, là vraiment c\'est une dinguerie"}}</p>
         </div>
       </div>
 
       <div class="subscribe-row">
         <a [routerLink]="['/amis', user?.username]"><p class="friends-link">Friends : {{friends?.length || 0}}</p></a>
-        <p-button *ngIf="otherUser" label="S'abonner" (onClick)="addFriend(user?.username || '')"></p-button>
+        <p-button *ngIf="otherUser && !subbed" label="S'abonner" (onClick)="addFriend(user?.username || '')"></p-button>
       </div>
     </div>
 

@@ -68,6 +68,10 @@ export class PageMessagesComponent implements OnInit{
 
   }
 
+  get currentTargetUsername() {
+    return  (this.currentTarget) ? this.currentTarget[0].toUpperCase() : "?";
+  }
+
   getMessages() {
     let currentUser = this.userService.getCurrentUser()
 
